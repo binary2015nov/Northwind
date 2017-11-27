@@ -5,20 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Funq;
 using ServiceStack;
-using Northwind.ServiceInterface;
+using ServiceStack.Data;
 using ServiceStack.Admin;
 using ServiceStack.OrmLite;
-using ServiceStack.Data;
+using ServiceStack.Configuration;
+using Northwind.ServiceInterface;
 
 namespace Northwind
 {
     public class Startup
     {
+        IConfiguration Configuration { get; set; }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -35,13 +40,15 @@ namespace Northwind
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseServiceStack(new AppHost());
+            app.UseServiceStack(new AppHost {
+                AppSettings = new NetCoreAppSettings(Configuration)
+            });
         }
     }
 
     public class AppHost : AppHostBase
     {
-        public AppHost() : base("Northwind Web Services", typeof(CustomersService).GetAssembly()) { }
+        public AppHost() : base("Northwind Web Services", typeof(CustomersService).Assembly) { }
 
         public override void Configure(Container container)
         {
