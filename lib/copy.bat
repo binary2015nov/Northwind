@@ -18,3 +18,5 @@ COPY ..\..\..\ServiceStack.Admin\src\ServiceStack.Admin\bin\%BUILD%\netstandard2
 COPY ..\..\..\ServiceStack.OrmLite\src\ServiceStack.OrmLite\bin\%BUILD%\netstandard2.0\ServiceStack.OrmLite.*
 COPY ..\..\..\ServiceStack.OrmLite\src\ServiceStack.OrmLite.Sqlite\bin\%BUILD%\netstandard2.0\ServiceStack.OrmLite.Sqlite.*
 COPY ..\..\..\ServiceStack.OrmLite\src\ServiceStack.OrmLite.Sqlite\bin\%BUILD%\netstandard2.0\System.Data.SQLite.dll
+
+COPY ..\..\..\ServiceStack.Redis\src\ServiceStack.Redis\bin\%BUILD%\netstandard2.0\ServiceStack.Redis.*
